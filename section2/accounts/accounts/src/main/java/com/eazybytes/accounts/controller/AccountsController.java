@@ -6,8 +6,12 @@ import com.eazybytes.accounts.dto.ResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.eazybytes.accounts.service.IAccountsService;
+
+import jakarta.validation.constraints.Pattern;
+
 import com.eazybytes.accounts.constants.AccountsConstants;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +20,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping(path = "/api",produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor 
+@Validated 
 public class AccountsController {
 
     private IAccountsService iAccountsService;
@@ -30,7 +35,9 @@ public class AccountsController {
     }
 
     @GetMapping("/fetch")
-    public ResponseEntity<CustomerDTO> fetchAccountDetails(@RequestParam String mobileNumber){
+    public ResponseEntity<CustomerDTO> fetchAccountDetails(@RequestParam 
+                            @Pattern(regexp = "^$|[0-9]{10}", message = "Account number must be a 10-digit number")
+                            String mobileNumber){
         CustomerDTO customerDTO =  iAccountsService.fetchAccount(mobileNumber);
 
         return ResponseEntity.status(HttpStatus.OK)
@@ -52,7 +59,9 @@ public class AccountsController {
     }
 
     @DeleteMapping ("/delete")
-    public ResponseEntity<ResponseDTO> deleteAccountDetails(@RequestParam String mobileNumber){
+    public ResponseEntity<ResponseDTO> deleteAccountDetails(@RequestParam 
+                        @Pattern(regexp = "^$|[0-9]{10}", message = "Account number must be a 10-digit number")
+                        String mobileNumber){
         boolean isDeleted = iAccountsService.deleteAccount(mobileNumber);
 
         if (isDeleted) {

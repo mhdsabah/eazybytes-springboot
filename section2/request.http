@@ -1,15 +1,25 @@
 # Create Account
+# POST http://localhost:8080/api/create
+# Content-Type: application/json
+
+# {
+#   "name": "Sabah",
+#   "email": "sabah@example.com",
+#   "mobileNumber": "1234567890"
+# }
+
+# Create Account
 POST http://localhost:8080/api/create
 Content-Type: application/json
 
 {
-  "name": "Sabah",
-  "email": "sabah@example.com",
-  "mobileNumber": "1234567890"
+  "name": "S",
+  "email": "sabahexample.com",
+  "mobileNumber": "12345670"
 }
 
 # Fetch Account
-GET http://localhost:8080/api/fetch?mobileNumber=1234567890
+# GET http://localhost:8080/api/fetch?mobileNumber=1234567890
 
 ### Update Account
 PUT http://localhost:8080/api/update
