@@ -1,4 +1,4 @@
-### Create Account
+# Create Account
 # POST http://localhost:8080/api/create
 # Content-Type: application/json
 
@@ -9,4 +9,19 @@
 # }
 
 
-GET http://localhost:8080/api/fetch?mobileNumber=123456789
+# GET http://localhost:8080/api/fetch?mobileNumber=1234567890
+
+### Update Account
+PUT http://localhost:8080/api/update
+Content-Type: application/json
+
+{
+  "name": "Sabah",
+  "email": "sabah@examples.com",
+  "mobileNumber": "1234567890",
+  "accountsDTO": {
+    "accountNumber": 1669256445,
+    "accountType": "Savings",
+    "branchAddress": "123 Main Street, New York"
+  }
+}
