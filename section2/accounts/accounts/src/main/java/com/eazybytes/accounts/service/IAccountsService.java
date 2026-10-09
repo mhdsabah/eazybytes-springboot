@@ -12,4 +12,6 @@ public interface IAccountsService {
      */
     void CreateAccount(CustomerDTO customerDTO);
 
+    CustomerDTO fetchAccount(String mobileNumber);
+
 }

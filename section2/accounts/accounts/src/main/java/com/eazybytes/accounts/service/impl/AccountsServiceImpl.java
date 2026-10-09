@@ -1,9 +1,13 @@
 package com.eazybytes.accounts.service.impl;
 
+import java.lang.module.ResolutionException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
+import com.eazybytes.accounts.dto.AccountsDTO;
+import com.eazybytes.accounts.exception.ResourceNotFoundException;
+import com.eazybytes.accounts.mapper.AccountsMapper;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +57,27 @@ public class AccountsServiceImpl implements IAccountsService {
         newAccount.setCreatedAt(LocalDateTime.now());
         newAccount.setCreatedBy("Anonymous");
         return newAccount;
+    }
+
+
+    /**
+     *
+     * @param mobileNumber
+     * @return Account details based on a given MobileNumber
+     */
+    @Override
+    public CustomerDTO fetchAccount(String mobileNumber){
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                ()->new ResourceNotFoundException("Customer","mobileNumber",mobileNumber)
+        );
+
+        Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId()).orElseThrow(
+                ()->new ResourceNotFoundException("Account","customerId",customer.getCustomerId().toString())
+        );
+
+        CustomerDTO customerDTO = CustomerMapper.maptoCustomerDTO(customer,new CustomerDTO());
+        customerDTO.setAccountsDTO(AccountsMapper.maptoAccountsDTO(accounts,new AccountsDTO()));
+        return customerDTO;
     }
 
 
