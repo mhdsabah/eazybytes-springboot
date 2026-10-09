@@ -3,6 +3,7 @@ package com.eazybytes.accounts.controller;
 import com.eazybytes.accounts.dto.CustomerDTO;
 import com.eazybytes.accounts.dto.ResponseDTO;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class AccountsController {
     private IAccountsService iAccountsService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseDTO> createAccount(@RequestBody CustomerDTO customerDTO){
+    public ResponseEntity<ResponseDTO> createAccount(@Valid @RequestBody CustomerDTO customerDTO){
         iAccountsService.CreateAccount(customerDTO);
 
 
@@ -46,7 +47,7 @@ public class AccountsController {
     }
 
     @PutMapping ("/update")
-    public ResponseEntity<ResponseDTO> updateAccountDetails(@RequestBody CustomerDTO customerDTO){
+    public ResponseEntity<ResponseDTO> updateAccountDetails(@Valid @RequestBody CustomerDTO customerDTO){
         boolean isUpdated = iAccountsService.updateAccount(customerDTO);
 
         if (isUpdated) {
