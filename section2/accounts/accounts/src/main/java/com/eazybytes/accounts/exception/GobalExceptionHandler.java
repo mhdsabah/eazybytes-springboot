@@ -74,7 +74,7 @@ public class GobalExceptionHandler extends ResponseEntityExceptionHandler{
     // This method handles any other exceptions that are not specifically handled by the above methods. 
     // It returns a generic error response with a status code of 500 (Internal Server Error).
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDTO> handleGlobalException(ResourceNotFoundException exception,
+    public ResponseEntity<ErrorResponseDTO> handleGlobalException(Exception exception,
                                                                             WebRequest webRequest){
         ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
                 webRequest.getDescription(false),
