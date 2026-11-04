@@ -40,19 +40,22 @@ import org.springframework.web.bind.annotation.*;
 public class LoansController {
 
     private final ILoansService iLoansService;
+    private LoansContactInfoDTO loansContactInfoDTO;
+    private Environment environment;
 
-    public LoansController(ILoansService iLoansService){
+    public LoansController(ILoansService iLoansService, LoansContactInfoDTO loansContactInfoDTO, Environment environment){
         this.iLoansService = iLoansService;
+        this.loansContactInfoDTO = loansContactInfoDTO;
+        this.environment = environment;
     }
 
-    @Autowired
-    private LoansContactInfoDTO loansContactInfoDTO;
+
+
 
     @Value("${build.version}")
     private String buildVersion;
 
-    @Autowired
-    Environment environment;
+
 
     @Operation(
             summary = "Create Loan REST API",

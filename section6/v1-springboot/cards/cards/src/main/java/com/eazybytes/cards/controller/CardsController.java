@@ -36,19 +36,20 @@ import org.springframework.web.bind.annotation.*;
 public class CardsController {
 
     private final ICardsService cardsService;
+    private CardsContactInfoDTO cardsContactInfoDTO;
+    private Environment environment;
 
-    public CardsController(ICardsService cardsService){
+
+    public CardsController(ICardsService cardsService, CardsContactInfoDTO cardsContactInfoDTO,
+                           Environment environment){
         this.cardsService = cardsService;
+        this.cardsContactInfoDTO = cardsContactInfoDTO;
+        this.environment = environment;
     }
 
     @Value("${build.version}")
     private String buildInfo;
 
-    @Autowired
-    CardsContactInfoDTO cardsContactInfoDTO;
-
-    @Autowired
-    Environment environment;
 
     @Operation(
             summary = "Create Card REST API",

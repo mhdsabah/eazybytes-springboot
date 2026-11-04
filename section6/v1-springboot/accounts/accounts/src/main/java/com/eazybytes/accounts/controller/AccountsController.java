@@ -41,20 +41,22 @@ import lombok.AllArgsConstructor;
 public class AccountsController {
 
     private final IAccountsService iAccountsService;
+    private AccountsContactInfoDTO accountsContactInfoDTO;
+    private Environment environment;
 
-    @Autowired
-    public AccountsController(IAccountsService iAccountsService){
+
+    public AccountsController(IAccountsService iAccountsService, AccountsContactInfoDTO accountsContactInfoDTO,
+                              Environment environment){
         this.iAccountsService = iAccountsService;
+        this.accountsContactInfoDTO = accountsContactInfoDTO;
+        this.environment = environment;
     }
 
     @Value("${build.version}")
     private String buildVersion;
 
-    @Autowired
-    private Environment environment;
 
-    @Autowired
-    private AccountsContactInfoDTO accountsContactInfoDTO;
+
 
     @Operation(
             summary="Create Account REST API",
