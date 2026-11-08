@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: configserver
+  profiles:
+    active: git
+  cloud:
+    config:
+      server:
+
+#        native:
+#          search-locations: classpath:/config
+#          search-locations: "file:///E:/Projects/Java/Projects/Udemy Course/section6/config"
+        git:
+          uri: "https://github.com/eazybytes/eazybytes-config.git"
+          default-label: main
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+          monitor:
+            validation-filter-enabled: false
+
+encrypt:
+  key: "29WJFSLJ234KL0FJ94J2LKF2F4521"
+
+server:
+  port: 8071
+
+logging:
+  pattern:
+    console: ${CONSOLE_LOG_PATTERN:%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}) - %cyan(%msg%n)}

@@ -2,14 +2,25 @@ spring:
   application:
     name: configserver
   profiles:
-    active: native
+    active: git
   cloud:
     config:
       server:
-        native:
-#          search-locations: classpath:/config
-          search-locations: "file:///E:/Projects/Java/Projects/Udemy Course/section6/config"
 
+#        native:
+#          search-locations: classpath:/config
+#          search-locations: "file:///E:/Projects/Java/Projects/Udemy Course/section6/config"
+        git:
+          uri: "https://github.com/mhdsabah/eazybytes-config.git"
+          default-label: main
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+          monitor:
+            validation-filter-enabled: false
+
+encrypt:
+  key: "29WJFSLJ234KL0FJ94J2LKF2F4521"
 
 server:
   port: 8071
