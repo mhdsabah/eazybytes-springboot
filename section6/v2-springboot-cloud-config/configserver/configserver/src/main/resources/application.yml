@@ -18,6 +18,11 @@ spring:
           force-pull: true
           monitor:
             validation-filter-enabled: false
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
 
 encrypt:
   key: "29WJFSLJ234KL0FJ94J2LKF2F4521"
