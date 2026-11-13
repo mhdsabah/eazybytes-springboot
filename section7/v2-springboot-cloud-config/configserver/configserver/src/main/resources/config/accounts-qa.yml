@@ -1,0 +1,11 @@
+build:
+  version: 2.0
+
+accounts:
+  message: "Welcome to EazyBank accounts related QA API's "
+  contactDetails:
+    name: "Smitha R - Developer"
+    email: "smitha.r@eazybank.com"
+  onCallSupport:
+    - (555) 666-1234
+    - (555) 666-1345
