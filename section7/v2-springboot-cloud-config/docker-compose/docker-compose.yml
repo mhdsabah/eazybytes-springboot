@@ -1,23 +1,45 @@
 name: eazybank-microservices
 services:
-  rabbit:
-    image: rabbitmq:4-management
+  accountsdb:
+    container_name: accountsdb
     ports:
-      - "5672:5672"
-      - "15672:15672"
-    healthcheck:
-      test: rabbitmq-diagnostics check_port_connectivity
-      interval: 10s
-      timeout: 5s
-      retries: 19
-      start_period: 5s
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: accountsdb
+    volumes:
+      - ./mysqldata_accounts:/var/lib/mysql
     extends:
       file: common-config.yml
-      service: network-deploy-service
+      service: microservice-db-config
+
+  loansdb:
+    container_name: loansdb
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: loansdb
+    volumes:
+      - ./mysqldata_loans:/var/lib/mysql
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
+
+
+  cardsdb:
+    container_name: cardsdb
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_DATABASE: cardsdb
+    volumes:
+      - ./mysqldata_cards:/var/lib/mysql
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
 
 
   configserver:
-    image: "sabah7/configserver:${IMAGE_TAG:-s6}"
+    image: "sabah7/configserver:${IMAGE_TAG:-s7}"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -27,23 +49,23 @@ services:
       timeout: 5s
       retries: 10
       start_period: 5s
-    depends_on:
-      rabbit:
-        condition: service_healthy
-    environment:
-      SPRING_RABBITMQ_HOST: "rabbit"
+
     extends:
       file: common-config.yml
       service: microservice-base-config
 
   accounts:
-    image: "sabah7/accounts:${IMAGE_TAG:-s6}"
+    image: "sabah7/accounts:${IMAGE_TAG:-s7}"
     container_name: accounts-ms
     restart: unless-stopped
     ports:
       - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:mysql://accountsdb:3306/accountsdb"
     depends_on:
       configserver:
+        condition: service_healthy
+      accountsdb:
         condition: service_healthy
 
     extends:
@@ -51,24 +73,32 @@ services:
       service: microservice-configserver-config
 
   loans:
-    image: "sabah7/loan:${IMAGE_TAG:-s6}"
+    image: "sabah7/loans:${IMAGE_TAG:-s7}"
     container_name: loans-ms
     ports:
       - "8090:8090"
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:mysql://loansdb:3306/loansdb"
     depends_on:
       configserver:
+        condition: service_healthy
+      loansdb:
         condition: service_healthy
     extends:
       file: common-config.yml
       service: microservice-configserver-config
 
   cards:
-    image: "sabah7/cards:${IMAGE_TAG:-s6}"
+    image: "sabah7/cards:${IMAGE_TAG:-s7}"
     container_name: cards-ms
     ports:
       - "9000:9000"
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:mysql://cardsdb:3306/cardsdb"
     depends_on:
       configserver:
+        condition: service_healthy
+      cardsdb:
         condition: service_healthy
     extends:
       file: common-config.yml
