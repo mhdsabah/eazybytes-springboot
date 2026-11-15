@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/v2-springboot-cloud-config/accounts/accounts/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/v2-springboot-cloud-config/cards/cards/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/v2-springboot-cloud-config/configserver/configserver/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/v2-springboot-cloud-config/eurekaserver/eurekaserver/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/v2-springboot-cloud-config/loans/loans/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/v2-springboot-cloud-config/out/production/v2-springboot-cloud-config/src/main/java" charset="UTF-8" />
+  </component>
+</project>
