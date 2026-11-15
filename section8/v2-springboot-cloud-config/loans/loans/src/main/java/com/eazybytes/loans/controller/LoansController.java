@@ -3,7 +3,7 @@ package com.eazybytes.loans.controller;
 import com.eazybytes.loans.constants.LoansConstants;
 import com.eazybytes.loans.dto.ErrorResponseDTO;
 import com.eazybytes.loans.dto.LoansContactInfoDTO;
-import com.eazybytes.loans.dto.LoansDto;
+import com.eazybytes.loans.dto.LoansDTO;
 //import com.eazybytes.loans.dto.ResponseDto;
 import com.eazybytes.loans.dto.ResponseDto;
 import com.eazybytes.loans.service.ILoansService;
@@ -105,11 +105,11 @@ public class LoansController {
     }
     )
     @GetMapping("/fetch")
-    public ResponseEntity<LoansDto> fetchLoanDetails(@RequestParam
+    public ResponseEntity<LoansDTO> fetchLoanDetails(@RequestParam
                                                                @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                                String mobileNumber) {
-        LoansDto loansDto = iLoansService.fetchLoan(mobileNumber);
-        return ResponseEntity.status(HttpStatus.OK).body(loansDto);
+        LoansDTO LoansDTO = iLoansService.fetchLoan(mobileNumber);
+        return ResponseEntity.status(HttpStatus.OK).body(LoansDTO);
     }
 
     @Operation(
@@ -135,8 +135,8 @@ public class LoansController {
         }
     )
     @PutMapping("/update")
-    public ResponseEntity<ResponseDto> updateLoanDetails(@Valid @RequestBody LoansDto loansDto) {
-        boolean isUpdated = iLoansService.updateLoan(loansDto);
+    public ResponseEntity<ResponseDto> updateLoanDetails(@Valid @RequestBody LoansDTO LoansDTO) {
+        boolean isUpdated = iLoansService.updateLoan(LoansDTO);
         if(isUpdated) {
             return ResponseEntity
                     .status(HttpStatus.OK)
